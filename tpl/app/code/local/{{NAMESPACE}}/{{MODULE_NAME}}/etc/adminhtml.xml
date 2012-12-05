@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <cms>
+            <children>
+                <{{NAME_LOWERCASE}} translate="title" module="{{NAME_LOWERCASE}}">
+                    <title>{{MODULE_NAME}}</title>
+                    <action>{{NAME_LOWERCASE}}</action>
+                </{{NAME_LOWERCASE}}>
+            </children>
+        </cms>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <cms>
+                        <children>
+                            <{{NAME_LOWERCASE}} translate="title" module="{{NAME_LOWERCASE}}">
+                                <title>{{MODULE_NAME}}</title>
+                            </{{NAME_LOWERCASE}}>
+                        </children>
+                    </cms>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

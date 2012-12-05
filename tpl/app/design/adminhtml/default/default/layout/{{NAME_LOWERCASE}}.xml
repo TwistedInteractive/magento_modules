@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <{{NAME_LOWERCASE}}_index_index>
+        <reference name="content">
+            <block type="{{NAME_LOWERCASE}}/adminhtml_{{NAME_LOWERCASE}}" name="{{NAME_LOWERCASE}}"/>
+        </reference>
+    </{{NAME_LOWERCASE}}_index_index>
+
+    <{{NAME_LOWERCASE}}_index_edit>
+        <reference name="content">
+            <block type="{{NAME_LOWERCASE}}/adminhtml_{{NAME_LOWERCASE}}_edit" name="{{NAME_LOWERCASE}}_edit"/>
+        </reference>
+    </{{NAME_LOWERCASE}}_index_edit>
+</layout>
