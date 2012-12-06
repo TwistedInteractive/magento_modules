@@ -79,7 +79,7 @@ pdf|file'
 			inputVars('namespace', null, '', $vars['NAMESPACE']);
 			inputVars('module_name', null, '', $vars['MODULE_NAME']);
 ?>
-			<p>Velden: text,textarea,select(a,b,c),image,file:</p>
+			<p>Velden: text,textarea,select(a,b,c),image,file,date:</p>
 			<textarea name="vars[fields]"><?php echo $vars['FIELDS']; ?></textarea>
 
 			<br />

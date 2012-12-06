@@ -108,6 +108,21 @@ foreach($fields as $field)
 				);
 				break;
 			}
+			case 'date' :
+			{
+				$form .= sprintf('
+        $fieldset->addField(\'%4$s\', \'%1$s\', array(
+            \'label\' => Mage::helper(\'%2$s\')->__(\'%3$s\'), \'name\' => \'%4$s\',
+            \'format\' => \'d-M-yyyy\',
+			\'image\'     => $this->getSkinUrl(\'images/grid-cal.gif\')
+        ));',
+					$type,
+					$vars['NAME_LOWERCASE'],
+					ucfirst($name),
+					$name
+				);
+				break;
+			}
 		}
 
 		// EERSTE KOLOM:
