@@ -54,6 +54,11 @@ foreach($fields as $field)
 				$sql .= sprintf('`%s` MEDIUMTEXT,', $name);
 				break;
 			}
+			case 'date' :
+			{
+				$sql .= sprintf('`%s` DATE,', $name);
+				break;
+			}
 			default :
 			{
 				$sql .= sprintf('`%s` VARCHAR(255),', $name);
@@ -113,7 +118,7 @@ foreach($fields as $field)
 				$form .= sprintf('
         $fieldset->addField(\'%4$s\', \'%1$s\', array(
             \'label\' => Mage::helper(\'%2$s\')->__(\'%3$s\'), \'name\' => \'%4$s\',
-            \'format\' => \'d-M-yyyy\',
+            \'format\' => \'yyyy-MM-dd\',
 			\'image\'     => $this->getSkinUrl(\'images/grid-cal.gif\')
         ));',
 					$type,
