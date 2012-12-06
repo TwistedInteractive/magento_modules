@@ -71,15 +71,22 @@ foreach($fields as $field)
 		// Form:
 		switch($type)
 		{
-			case 'text' :
-			case 'textarea' :
 			case 'image' :
 			case 'file' :
 			{
 				$form .= sprintf('
-        $fieldset->addField(\'%4$s\', \'%1$s\', array(
+        $file = $fieldset->addField(\'%4$s\', \'%1$s\', array(
             \'label\' => Mage::helper(\'%2$s\')->__(\'%3$s\'), \'name\' => \'%4$s\'
-        ));',
+        ));
+        if(!empty($data[\'%4$s\']))
+		{
+			$file->setAfterElementHtml(\'
+				<p>Current file: <em>\'.$data[\'%4$s\'].\'</em> -
+				<label><input type="checkbox" name="\'%4$s\'[delete]" value="1" /> Delete</label>
+				<input type="hidden" name="\'%4$s\'[value]" value="\'.$data[\'%4$s\'].\'" />
+				</p>
+				\');
+		}',
 					$type,
 					$vars['NAME_LOWERCASE'],
 					ucfirst($name),
@@ -129,6 +136,19 @@ foreach($fields as $field)
 				);
 				break;
 			}
+			default :
+				{
+				$form .= sprintf('
+			$fieldset->addField(\'%4$s\', \'%1$s\', array(
+				\'label\' => Mage::helper(\'%2$s\')->__(\'%3$s\'), \'name\' => \'%4$s\'
+			));',
+					$type,
+					$vars['NAME_LOWERCASE'],
+					ucfirst($name),
+					$name
+				);
+				break;
+				}
 		}
 
 		// FILE UPLOADS:
