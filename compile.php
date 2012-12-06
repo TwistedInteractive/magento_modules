@@ -36,6 +36,7 @@ $vars['NAME_LOWERCASE'] = strtolower($vars['MODULE_NAME']);
 $fields = explode("\n", $vars['FIELDS']);
 $sql = '';
 $form = '';
+$uploads = '';
 $first = true;
 foreach($fields as $field)
 {
@@ -130,6 +131,12 @@ foreach($fields as $field)
 			}
 		}
 
+		// FILE UPLOADS:
+		if($type == 'image' || $type == 'file')
+		{
+			$uploads .= '$data = $this->handleUpload(\''.$name.'\', $duplicate, $data);'."\n";
+		}
+
 		// EERSTE KOLOM:
 		if($first)
 		{
@@ -149,6 +156,7 @@ foreach($fields as $field)
 }
 $vars['INSTALL_SQL'] = $sql;
 $vars['FORM'] = $form;
+$vars['FILE_UPLOADS'] = $uploads;
 
 // Output:
 flushDir('output');

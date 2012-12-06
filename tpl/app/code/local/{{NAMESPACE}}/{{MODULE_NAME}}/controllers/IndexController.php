@@ -64,90 +64,7 @@ class {{NAMESPACE}}_{{MODULE_NAME}}_IndexController extends Mage_Adminhtml_Contr
             }
 
             // File uploads:
-            if (isset($_FILES['image']['name']) && (file_exists($_FILES['image']['tmp_name']))) {
-                try {
-	                $oldFile = (isset($data['image']) && is_array($data['image'])) ? $data['image']['value'] : false;
-
-	                $path = Mage::getBaseDir('media') . DS;
-	                $fullpath = $this->getIncreasedFile($path.'/'.$_FILES['image']['name']);
-	                $info = pathinfo($fullpath);
-	                move_uploaded_file($_FILES['image']['tmp_name'], $fullpath);
-                    $data['image'] = $info['basename'];
-
-	                // Delete old file:
-	                if($oldFile != false)
-	                {
-		                if(file_exists(Mage::getBaseDir('media').DS.$oldFile))
-                        {
-                            unlink(Mage::getBaseDir('media').DS.$oldFile);
-                        }
-	                }
-                } catch (Exception $e) {
-
-                }
-            } else {
-                if(isset($data['image']) && is_array($data['image']))
-                {
-	                if($duplicate == true)
-	                {
-		                // Make a copy of the image:
-		                $hash = substr(md5(time()), 0, 8);
-		                copy(Mage::getBaseDir('media').DS.$data['image']['value'], Mage::getBaseDir('media').DS.$hash.'-'.$data['image']['value']);
-		                $data['image']['value'] = $hash.'-'.$data['image']['value'];
-	                }
-                    if(isset($data['image']['delete']) && $data['image']['delete'] == 1)
-                    {
-                        // delete the file:
-	                    if(file_exists(Mage::getBaseDir('media').DS.$data['image']['value']))
-	                    {
-		                    unlink(Mage::getBaseDir('media').DS.$data['image']['value']);
-	                    }
-                        $data['image'] = null;
-                    } else {
-                        $data['image'] = $data['image']['value'];
-                    }
-                }
-            }
-
-	        if (isset($_FILES['thumbnail']['name']) && (file_exists($_FILES['thumbnail']['tmp_name']))) {
-		        try {
-			        $oldFile = (isset($data['thumbnail']) && is_array($data['thumbnail'])) ? $data['thumbnail']['value'] : false;
-
-			        $path = Mage::getBaseDir('media') . DS;
-			        $fullpath = $this->getIncreasedFile($path . '/' . $_FILES['thumbnail']['name']);
-			        $info = pathinfo($fullpath);
-			        move_uploaded_file($_FILES['thumbnail']['tmp_name'], $fullpath);
-			        $data['thumbnail'] = $info['basename'];
-
-			        // Delete old file:
-			        if ($oldFile != false) {
-				        if (file_exists(Mage::getBaseDir('media') . DS . $oldFile)) {
-					        unlink(Mage::getBaseDir('media') . DS . $oldFile);
-				        }
-			        }
-		        } catch (Exception $e) {
-
-		        }
-	        } else {
-		        if (isset($data['thumbnail']) && is_array($data['thumbnail'])) {
-			        if ($duplicate == true) {
-				        // Make a copy of the image:
-				        $hash = substr(md5(time()), 0, 8);
-				        copy(Mage::getBaseDir('media') . DS . $data['thumbnail']['value'], Mage::getBaseDir('media') . DS . $hash . '-' . $data['thumbnail']['value']);
-				        $data['thumbnail']['value'] = $hash . '-' . $data['thumbnail']['value'];
-			        }
-			        if (isset($data['thumbnail']['delete']) && $data['thumbnail']['delete'] == 1) {
-				        // delete the file:
-				        if (file_exists(Mage::getBaseDir('media') . DS . $data['thumbnail']['value'])) {
-					        unlink(Mage::getBaseDir('media') . DS . $data['thumbnail']['value']);
-				        }
-				        $data['thumbnail'] = null;
-			        } else {
-				        $data['thumbnail'] = $data['thumbnail']['value'];
-			        }
-		        }
-	        }
-
+			{{FILE_UPLOADS}}
 
 	        // Set the data:
             $model->setData($data);
@@ -188,6 +105,55 @@ class {{NAMESPACE}}_{{MODULE_NAME}}_IndexController extends Mage_Adminhtml_Contr
         $this->_redirect('*/*/');
     }
 
+	private function handleUpload($name, $duplicate, $data)
+	{
+
+		if (isset($_FILES[$name]['name']) && (file_exists($_FILES[$name]['tmp_name']))) {
+			try {
+				$oldFile = (isset($data[$name]) && is_array($data[$name])) ? $data[$name]['value'] : false;
+
+				$path = Mage::getBaseDir('media') . DS;
+				$fullpath = $this->getIncreasedFile($path.'/'.$_FILES[$name]['name']);
+				$info = pathinfo($fullpath);
+				move_uploaded_file($_FILES[$name]['tmp_name'], $fullpath);
+				$data[$name] = $info['basename'];
+
+				// Delete old file:
+				if($oldFile != false)
+				{
+					if(file_exists(Mage::getBaseDir('media').DS.$oldFile))
+					{
+						unlink(Mage::getBaseDir('media').DS.$oldFile);
+					}
+				}
+			} catch (Exception $e) {
+
+			}
+		} else {
+			if(isset($data[$name]) && is_array($data[$name]))
+			{
+				if($duplicate == true)
+				{
+					// Make a copy of the image:
+					$hash = substr(md5(time()), 0, 8);
+					copy(Mage::getBaseDir('media').DS.$data[$name]['value'], Mage::getBaseDir('media').DS.$hash.'-'.$data[$name]['value']);
+					$data[$name]['value'] = $hash.'-'.$data[$name]['value'];
+				}
+				if(isset($data[$name]['delete']) && $data[$name]['delete'] == 1)
+				{
+					// delete the file:
+					if(file_exists(Mage::getBaseDir('media').DS.$data[$name]['value']))
+					{
+						unlink(Mage::getBaseDir('media').DS.$data[$name]['value']);
+					}
+					$data[$name] = null;
+				} else {
+					$data[$name] = $data[$name]['value'];
+				}
+			}
+		}
+		return $data;
+	}
 
 	private function getIncreasedFile($path, $next = 2)
 	{
