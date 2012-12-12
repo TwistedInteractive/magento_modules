@@ -82,8 +82,8 @@ foreach($fields as $field)
 		{
 			$file->setAfterElementHtml(\'
 				<p>Current file: <em>\'.$data[\'%4$s\'].\'</em> -
-				<label><input type="checkbox" name="\'%4$s\'[delete]" value="1" /> Delete</label>
-				<input type="hidden" name="\'%4$s\'[value]" value="\'.$data[\'%4$s\'].\'" />
+				<label><input type="checkbox" name="%4$s[delete]" value="1" /> Delete</label>
+				<input type="hidden" name="%4$s[value]" value="\'.$data[\'%4$s\'].\'" />
 				</p>
 				\');
 		}',
