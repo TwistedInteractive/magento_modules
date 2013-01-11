@@ -41,6 +41,13 @@ class {{NAMESPACE}}_{{MODULE_NAME}}_Block_Adminhtml_{{MODULE_NAME}}_Grid extends
             'index' => 'id',
         ));
 
+		$this->addColumn('order', array(
+			'header' => Mage::helper('{{NAME_LOWERCASE}}')->__('Order'),
+			'align' => 'right',
+			'width' => '50px',
+			'index' => 'order',
+		));
+
 		// Dit wordt dynamisch geladen:
 		{{FIRST_COLUMN}}
 

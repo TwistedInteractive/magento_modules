@@ -41,6 +41,19 @@ class {{NAMESPACE}}_{{MODULE_NAME}}_Block_Adminhtml_{{MODULE_NAME}}_Edit_Form ex
 		// Fields is dynamic:
 		{{FORM}}
 
+		// Order:
+		$fieldset->addField('order', 'text', array(
+			'label' => Mage::helper('{{NAME_LOWERCASE}}')->__('Order'),
+			'name' => 'order'
+		));
+		if(!isset($data['order'])) {
+			// Get next order number:
+			$rm = Mage::getResourceModel('{{NAME_LOWERCASE}}/main');
+			$read = $rm->getReadConnection();
+			$max  = $read->fetchOne('SELECT MAX(`order`) FROM `'.$rm->getTable('{{NAME_LOWERCASE}}/{{NAME_LOWERCASE}}').'`;');
+			$data['order'] = intval($max) + 1;
+		}
+
 		// Enabled:
 		$fieldset->addField('enabled', 'select', array(
 			'label' => Mage::helper('banners')->__('Enabled'),
