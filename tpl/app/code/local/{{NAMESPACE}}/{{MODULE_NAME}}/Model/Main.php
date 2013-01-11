@@ -32,15 +32,18 @@ class {{NAMESPACE}}_{{MODULE_NAME}}_Model_Main extends Mage_Core_Model_Abstract
         $this->_init('{{NAME_LOWERCASE}}/main');
     }
 
-    /**
-     * Get the store items
-     * @return object
-     */
-    public function getStoreItems()
-    {
-        $_items = $this->getCollection();
+	/**
+	 * Get the store items
+	 * @param string $_order
+	 * @param string $_direction
+	 * @return Twisted_Manufacturers_Model_Resource_Main_Collection
+	 */
+	public function getStoreItems($_order = 'order', $_direction = 'ASC')
+	{
+		$_items = $this->getCollection();
 		$_items->addFieldToFilter('enabled', array('eq' => 1));
 		$_items->addFieldToFilter('store_id', array('eq' => Mage::app()->getStore()->getId()));
-        return $_items;
-    }
+		$_items->setOrder('`'.$_order.'`', $_direction);
+		return $_items;
+	}
 }
